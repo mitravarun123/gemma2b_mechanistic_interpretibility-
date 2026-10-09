@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+output/
+.env
+.DS_Store
+gemma-head-specialization/
