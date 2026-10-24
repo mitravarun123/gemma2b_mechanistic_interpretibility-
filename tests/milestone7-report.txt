@@ -1,0 +1,73 @@
+Milestone 7 — final README and one-command runner
+Date: 2026-10-09
+
+Implemented:
+- Reworked README with an upfront verified status, setup, debug-first commands,
+  full-run instructions, all seven script commands, output folders, resumption,
+  configuration isolation, troubleshooting, result limits and test coverage.
+- Added `scripts/run_pipeline.py`: sequential stages 01–07, debug config by
+  default, chosen config, start/end stage, optional figure subset and dry run.
+- Runner stops on the first failed stage, returns a nonzero status, and records
+  the config checksum, request, timestamps, stage statuses/exit codes in
+  `results/pipeline_run.json`. Existing stage caches remain responsible for
+  resuming their own verified work.
+- Added the specification-compatible `scripts/07_make_figures.py` alias and
+  switched the runner to that entry point.
+- Expanded the CLI integration test to use the one-command runner for stages
+  01–07 on a temporary random Gemma model and controlled tokenizer.
+
+Full test command:
+PYTHONPATH=/private/tmp/gemma-milestone1-deps python3 -m pytest -q --basetemp=/private/tmp/gemma-milestone7-tests
+
+Test output:
+...........................................                              [100%]
+=============================== warnings summary ===============================
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+  /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+    parse = parser.parseString(pattern)
+
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+  /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+    parser.resetCache()
+
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_mathtext.py:45
+  /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+    ParserElement.enablePackrat()
+
+tests/test_clustering.py::test_partition_choice_and_group_weighting
+  /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/joblib/externals/loky/backend/context.py:136: UserWarning: Could not find the number of physical cores for the following reason:
+  invalid literal for int() with base 10: ''
+  Returning the number of logical cores instead. You can silence this warning by setting LOKY_MAX_CPU_COUNT to the number of cores you want to use.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+43 passed, 14 warnings in 62.97s (0:01:02)
+
+Additional checks:
+- `python scripts/run_pipeline.py --config configs/default.yaml --dry-run`
+  printed the seven expected commands and did not launch stages.
+- `python scripts/run_pipeline.py --config configs/debug.yaml --dry-run`
+  printed the debug stage list.
+- The integration test ran the offline seven-stage pipeline, generated Figures
+  2–11, and confirmed every stage was recorded complete. It exercises the
+  documented end-to-end runner without network/model downloads.
+- Runner unit tests verified fail-fast exit propagation, no filesystem writes
+  during dry run, and validation of stage/figure ranges.
+- Pretrained debug command attempted:
+  `python scripts/run_pipeline.py --config configs/debug.yaml`
+  It failed at stage 01 because the host could not resolve `huggingface.co`
+  (DNS/network unavailable). Therefore no pretrained Gemma measurements or
+  research figures are claimed. Gated model authorization is also required.
+
+Warnings were installed-library Pyparsing deprecations and joblib's fallback
+from missing physical CPU count to logical CPU count. There were no test failures.

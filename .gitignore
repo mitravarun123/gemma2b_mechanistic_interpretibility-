@@ -1,6 +1,5 @@
 .venv/
 __pycache__/
-output/
+.pytest_cache/
+*.egg-info/
 .env
-.DS_Store
-gemma-head-specialization/

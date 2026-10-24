@@ -1,0 +1,38 @@
+{
+  "config_path": "/Users/mitravarun/Desktop/mechanisticinterpretibilt/gemma-head-specialization/configs/debug.yaml",
+  "config_sha256": "6d40eac5de71a3c3b4103e94cc3fbdb471b610f4c70577f957c64dd76d497101",
+  "started_at": "2026-10-08T10:14:32.384222+00:00",
+  "requested_stages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "requested_figures": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "status": "failed",
+  "stages": [
+    {
+      "stage": 1,
+      "script": "01_generate_dataset.py",
+      "status": "failed",
+      "returncode": 1
+    }
+  ],
+  "failed_stage": 1,
+  "finished_at": "2026-10-08T10:15:24.354781+00:00"
+}

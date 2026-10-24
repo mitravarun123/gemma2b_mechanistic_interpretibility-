@@ -1,0 +1,47 @@
+Milestone 5 verification
+Command: PYTHONPATH=/private/tmp/gemma-milestone1-deps python3 -m pytest -q
+Result: 37 passed, 1 warning in 38.48s
+Warning: joblib fell back to logical CPU count because physical-core detection failed.
+Python compilation checked for src, scripts and tests.
+
+Verified:
+- Held-out consistency fractions, missing template-pair statuses, condition correlations,
+  stratified split-half reliability and explicit missingness/count fields.
+- Discovery-only reference activation means agree with an independent recomputation.
+- Every single head and available top-k groups are ablated at all positions.
+- Mean and zero ablation options, layer/count-matched random controls, overlap disclosure.
+- Missing shortlist groups are recorded rather than filled with arbitrary heads.
+- All-head denoising and noising patches, final-target and all-position policies.
+- Saved patch effects agree with direct real tiny-model interventions.
+- Self-patching is an identity; original full-clean-state hook test still passes.
+- Logit/probability recovery is 1 for full clean endpoint and 0 for unchanged corrupted endpoint.
+- Noising uses the same clean-corrupted denominator; inverted/tiny gaps are explicit.
+- Paired bootstrap CIs, paired dz, exact sign-flip known p values, scale invariance,
+  and Benjamini-Hochberg correction match analytical expectations.
+- Discovery feature / held-out causal correlations across all heads.
+- Candidate assessment requires task-matched positive FDR-controlled causal effects.
+- Completed cache reuse, final table repair from numeric checkpoints without inference.
+- Streamed per-prompt output, CPU donor caches, forward-memory budgeting.
+
+Offline CLI integration:
+Executed scripts 01, 02, 03, 04, 05 and 06 at debug dataset sizes in temporary directories.
+Used a controlled fast tokenizer and tiny random HuggingFace Gemma checkpoint, CPU.
+Generated 160 task-test records plus one diagnostic; 40 held-out behavioral prompts.
+Repeated scripts 05 and 06 verified final caches and skipped model loading.
+Direct intervention tests cover both HuggingFace Gemma and Gemma2 with shared KV heads,
+including Gemma2 sliding-window/soft-capping behavior preserved by native model modules.
+These are pipeline-mechanics checks, not pretrained-model findings.
+
+Configured real-model attempt:
+05_run_ablation.py --config configs/debug.yaml cannot proceed: data/processed/discovery.jsonl
+is absent because earlier real-model generation was blocked by gated Gemma access.
+No pretrained Gemma consistency, ablation, patching or validated-head findings were produced.
+
+Material limits:
+- Disjoint discovery/validation templates have no automatic correspondence.
+  Default template correlations are NaN with disjoint_templates_no_mapping status.
+  Explicit mappings are supported, but current two templates/task are fewer than the
+  minimum three pairs required for a defensible template correlation.
+- Induction/local-context have attention targets but no matched behavioral answer target;
+  their candidates cannot be called causally validated by name/coreference interventions.
+- Positive-gap and all-signed recovery summaries are distinct; tiny denominators are not imputed.

@@ -1,0 +1,61 @@
+seed: 42
+model:
+  name: google/gemma-2b
+  dtype: float32
+  device: auto
+  revision: main
+batch_size: 2
+dataset:
+  discovery_per_task: 20
+  validation_per_task: 20
+extraction:
+  example_prompts: 4
+  max_attention_mb: 64
+features:
+  layer_bootstrap_repeats: 50
+clustering:
+  k_range: [2, 3, 4, 5, 6, 7, 8]
+  bootstrap_repeats: 10
+  shortlist_per_cluster: 3
+  bos_mode: excluded
+  primary_method: kmeans
+  n_init: 10
+  gmm_n_init: 3
+  gmm_reg_covar: 0.000001
+  max_iter: 500
+  bootstrap_stratify_templates: true
+  group_weights:
+    entropy: 1.0
+    distance: 1.0
+    sparsity: 1.0
+    task: 1.0
+  selection:
+    min_cluster_task_z: 0.5
+    min_head_specialization: 1.0
+    min_task_agreement: 0.5
+validation:
+  ablation: mean
+  reference_size: 10
+  top_k: [1, 3, 5]
+  random_control_repeats: 5
+  bootstrap_repeats: 20
+  patch_positions: target
+  consistency_threshold: 0.2
+  minimum_consistency_fraction: 0.5
+  minimum_correlation_pairs: 3
+  split_half_repeats: 20
+  template_pairs: []
+  recovery_epsilon: 0.000001
+  fdr_alpha: 0.05
+  max_activation_mb: 256
+  max_forward_mb: 512
+  permutation_repeats: 50
+results_dir: results
+data_dir: data
+figures:
+  bos_mode: excluded
+  split: discovery
+  behavioral_task: all
+  top_heads: 8
+  control_specialization_max: 0.5
+  recovery_metric: recovery_logit_positive_gap

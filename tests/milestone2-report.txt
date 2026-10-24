@@ -1,0 +1,18 @@
+Milestone 2 implementation verification
+Command: PYTHONPATH=/private/tmp/gemma-milestone1-deps python3 -m pytest -q
+Result: 12 passed in 2.00s
+Python compilation: passed for src, scripts, tests.
+
+Dataset tests use a controlled HuggingFace fast tokenizer, NOT the Gemma tokenizer.
+Calibration tests use random tiny Gemma weights, NOT pretrained Gemma.
+Verified disjoint one-token gendered pools, BOS-aware key indices, correct/distractor inversion,
+aligned twins, induction successor positions, local-context sources, task counts,
+answer-gender balance, deterministic generation, length batching, real-logit calibration,
+and partial calibration resume. Existing hook tests also pass.
+
+Attempted real command:
+PYTHONPATH=/private/tmp/gemma-milestone1-deps python3 scripts/01_generate_dataset.py --config configs/debug.yaml
+Outcome: Hugging Face returned 401 Unauthorized (gated google/gemma-2b).
+HF_TOKEN was not available in this process environment.
+No Gemma-tokenized dataset or pretrained calibration result was produced.
+Real-tokenizer alignment and pretrained baseline accuracy remain unverified.

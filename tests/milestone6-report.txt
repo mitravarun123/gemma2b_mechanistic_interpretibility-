@@ -1,0 +1,108 @@
+Milestone 6 — figures
+Date: 2026-10-08
+
+Implemented:
+- Eleven separate figure modules, shared Matplotlib style, saved-artifact-only runner.
+- 300 dpi PNG plus PDF, per-figure checksums, selected head/example provenance,
+  verified render caches, explicit blocked statuses and no placeholder figures.
+- Saved token labels, ablation baseline summaries and measured patched outcomes
+  supplied by the upstream stages rather than recomputed by plotting code.
+- Figure 9 uses an observed patch outcome and unclipped saved recovery values.
+- Figure 10 assigns functional labels only to discovery-selected causal passes.
+
+Full suite command:
+PYTHONPATH=/private/tmp/gemma-milestone1-deps python3 -m pytest -q --basetemp=/private/tmp/gemma-milestone6-full
+
+Full suite output:
+........................................                                 [100%]
+=============================== warnings summary ===============================
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+  /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+    parse = parser.parseString(pattern)
+
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+  /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+    parser.resetCache()
+
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_mathtext.py:45
+  /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+    ParserElement.enablePackrat()
+
+tests/test_clustering.py::test_partition_choice_and_group_weighting
+  /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/joblib/externals/loky/backend/context.py:136: UserWarning: Could not find the number of physical cores for the following reason:
+  invalid literal for int() with base 10: ''
+  Returning the number of logical cores instead. You can silence this warning by setting LOKY_MAX_CPU_COUNT to the number of cores you want to use.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+40 passed, 14 warnings in 53.26s
+
+Verification:
+- Offline stages 01–06 run at debug dataset sizes with an actual temporary,
+  randomly initialized Hugging Face Gemma model (1 layer, 4 heads).
+- Figures 2–11 generated 10 PNG/PDF pairs from those measured results.
+- PNG dimensions/DPI, PDF signatures, source checksums and cache reuse checked.
+- Figure 7's plotted grid compared directly to saved accuracy effects.
+- Figure 1 correctly rejected the empty causal passing set. Its heatmap renderer
+  separately exported real saved attention with explicitly UNVALIDATED titles;
+  plotted arrays were compared to the attention shard.
+- Figure 10 remained neutral for all nonvalidated heads.
+- Tampering with a source CSV invalidated the figure cache, raised a checksum
+  error, and removed stale exports. Missing data never generated placeholders.
+- Visually inspected all eleven renderer outputs as a contact sheet; inspected
+  PCA and ablation plots at larger size. Corrected PCA arrow clipping and label
+  overlap, then rerendered. Figure 9 PDF was rasterized with pdftoppm and inspected.
+- All test measurements and graphics are in temporary test directories, distinct
+  from the research results directory. They are not pretrained Gemma findings.
+
+Configured pretrained debug attempt:
+python scripts/07_generate_figures.py --config configs/debug.yaml
+Exited nonzero with clear missing-input errors for results/attention/metadata.json.
+The upstream pretrained run remains unavailable following the earlier gated-model
+access failure. No pretrained research figures or validated-head claims produced.
+An all-eleven-figure research export also requires an actual causally validated
+head and a qualifying low-specialization control for Figure 1. Empty passing sets
+remain legitimate scientific outcomes and must not be replaced by invented heads.
+
+Milestone 7 (final README polish and one-command runner) has not been started.
+
+Final focused rerun after PCA label/layout and logging adjustments:
+PYTHONPATH=/private/tmp/gemma-milestone1-deps python3 -m pytest -q tests/test_figures.py tests/test_pipeline_cli.py --basetemp=/private/tmp/gemma-milestone6-final
+....                                                                     [100%]
+=============================== warnings summary ===============================
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88
+  /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:88: PyparsingDeprecationWarning: 'parseString' deprecated - use 'parse_string'
+    parse = parser.parseString(pattern)
+
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92
+  /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_fontconfig_pattern.py:92: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'
+    parser.resetCache()
+
+../../../../../Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_mathtext.py:45
+  /Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/matplotlib/_mathtext.py:45: PyparsingDeprecationWarning: 'enablePackrat' deprecated - use 'enable_packrat'
+    ParserElement.enablePackrat()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+4 passed, 13 warnings in 40.51s
+
+Warnings are installed-library Pyparsing deprecations and the full-suite joblib physical-core-count fallback; no test failures.

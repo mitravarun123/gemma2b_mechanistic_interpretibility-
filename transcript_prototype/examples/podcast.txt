@@ -1,1 +1,0 @@
-Today we discuss retrieval augmented generation. Retrieval augmented generation retrieves relevant documents before a language model generates an answer. We also discuss vector databases, which store embeddings and support similarity search.

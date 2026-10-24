@@ -1,0 +1,30 @@
+Milestone 4 verification
+Command: PYTHONPATH=/private/tmp/gemma-milestone1-deps python3 -m pytest -q
+Result: 27 passed, 1 warning in 23.71s
+Python compilation: passed for src, scripts, tests.
+Warning: joblib could not infer physical CPU count on this machine and used logical cores.
+
+Verified:
+- KMeans and Gaussian mixture silhouette-based k selection and invalid-k reporting.
+- Standardization and equal total weighting of the four feature groups.
+- Discovery-only fitting; held-out feature changes and an unavailable validation shard
+  leave discovery assignments and PCA coordinates unchanged.
+- Task/template-stratified prompt resampling uses common draws across heads.
+- Reconstructed prompt means agree with saved discovery feature tables.
+- Bootstrap refits specialization, standardization and partitions at fixed selected k.
+- Saved PCA parameters reproduce coordinates exactly within numerical tolerance.
+- Profiles, complete layer/cluster distributions, candidate threshold/ranking rules,
+  and legitimate empty shortlists; candidates remain explicitly unvalidated.
+- Completed-stage cache reuse and per-repeat checkpoint reuse after output repair.
+- Numeric model parameters, provenance and checksum-based artifacts.
+
+Offline command-line integration:
+Ran scripts 01, 02, 03 and 04 at debug dataset sizes in a temporary directory.
+Used a controlled fast tokenizer and tiny random Gemma checkpoint, not pretrained Gemma.
+160 task records plus one diagnostic; two splits, four tasks, both BOS modes.
+These are mechanics tests, not pretrained-model research findings.
+
+Configured real Gemma run:
+Step 04 cannot run because default results/features/head_features.csv is absent.
+Earlier real-model stages remain blocked by gated google/gemma-2b access.
+No pretrained Gemma cluster assignments, stability findings or candidate heads were produced.

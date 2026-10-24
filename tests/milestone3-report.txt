@@ -1,0 +1,41 @@
+Milestone 3 verification
+Command: PYTHONPATH=/private/tmp/gemma-milestone1-deps python3 -m pytest -q
+Result: 22 passed in 13.90s
+Python compilation: passed for src, scripts, tests.
+
+Analytical checks:
+- Uniform entropy log(n); normalized entropy 1; one-hot entropy 0.
+- Finite-support Gini 1 for one-hot and 0 for uniform; top-1 mass verified.
+- Previous-token distance 1, including original positions after removing BOS.
+- Vectorized row statistics agree with scalar definitions.
+- BOS sink mass, category mass conservation, zero remaining mass, singleton support.
+- Sliding-window support and causal-mask validation.
+
+Tiny-model integration:
+- Real HuggingFace Gemma and Gemma2 classes, random weights, shared KV heads.
+- Selected rows agree with an independent forward pass.
+- Sliding-window layer excludes inaccessible antecedents without changing global layers.
+- Discovery/validation and included/excluded tables, specialization, layer intervals.
+- Prompt-weighted/task-balanced aggregation; exact retained example count.
+- Checksummed shard repair and per-prompt recovery after interrupted index updates.
+- Completed extraction resumes without forward execution.
+
+Offline CLI test:
+- Ran scripts 01, 02 and 03 at configs/debug.yaml dataset sizes.
+- Override: controlled tokenizer plus temporary tiny random Gemma model, CPU, offline.
+- 20 prompts/task/split; 160 research-test records plus one Figure 1 diagnostic.
+- 80 behavioral calibration records, all computed from random-model logits.
+- Full matrices limited to four configured examples; diagnostic excluded from features.
+- Repeated script 02 skipped model loading; repeated script 03 reused unchanged CSVs.
+- All fixture data/results remain in temporary test directories, not default research outputs.
+
+Real configured-model run:
+Attempted scripts/02_extract_attention.py --config configs/debug.yaml.
+Stopped with clear FileNotFoundError for data/processed/discovery.jsonl.
+Milestone 2 real generation was blocked by gated Gemma access (401 Unauthorized).
+No real Gemma-tokenized input or pretrained attention/features were produced.
+Real pretrained-model extraction remains unverified until gated access is available.
+
+Layer specialization intervals bootstrap heads, not prompts. This distinction is recorded
+in feature definitions and table ci_method fields. Later clustering bootstrap can resample
+prompt-level statistics retained in the extraction shards.

@@ -1,0 +1,7 @@
+Milestone 1 verification
+Command: PYTHONPATH=/private/tmp/gemma-milestone1-deps python3 -m pytest -q
+Result: 8 passed in 8.52s
+Test runtime: Python 3.10.9, PyTorch 2.11.0, Transformers 4.44.2, NumPy 1.26.4
+Real HuggingFace Gemma and Gemma2 classes, tiny random weights, CPU.
+No pretrained weights or tokenizer downloaded; gated model behavior remains unverified.
+Initial collection failed due to NumPy/pandas ABI mismatch; resolved using temporary compatible dependencies.

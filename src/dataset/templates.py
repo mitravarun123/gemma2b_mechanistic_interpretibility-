@@ -1,0 +1,20 @@
+"""Different sentence structures for discovery and held-out validation."""
+
+TEMPLATES = {
+    "discovery": {
+        "name_tracking": [
+            {"id": "d_name_0", "text": "Yesterday {a} visited the market with {b}.{filler} Later {a} returned. The returning visitor was"},
+            {"id": "d_name_1", "text": "At the meeting {a} spoke before {b}.{filler} Afterward {a} stayed. The person who stayed was"}],
+        "coreference": [
+            {"id": "d_coref_0", "text": "Yesterday {a} gave {b} a book.{filler} She thanked him. The person she thanked was"},
+            {"id": "d_coref_1", "text": "At the station {a} helped {b}.{filler} She waved to him. The person she waved to was"}]},
+    "validation": {
+        "name_tracking": [
+            {"id": "v_name_0", "text": "The ticket belonged to {a}, although {b} carried the bag.{filler} When {a} arrived, the ticket holder was"},
+            {"id": "v_name_1", "text": "A letter for {a} was delivered by {b}.{filler} Only {a} opened it. The recipient of the letter was"}],
+        "coreference": [
+            {"id": "v_coref_0", "text": "The parcel that {b} received had been sent by {a}.{filler} She wrote to him. The person she wrote to was"},
+            {"id": "v_coref_1", "text": "Because {b} needed directions, {a} drew a map.{filler} She followed him. The person she followed was"}]}}
+
+DISTANCE_FILLERS = ["", " The weather was mild and the streets were quiet.",
+    " The weather was mild and the streets were quiet. Several hours passed while the staff discussed the schedule and prepared the room."]
